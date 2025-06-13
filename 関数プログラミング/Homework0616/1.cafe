@@ -1,16 +1,24 @@
 open NAT .
-op gcd : NAT NAT -> NAT .
-var X : NAT .
-var NzY : NAT . --Nz : Not zero
+
+-- オペレータ gcd を宣言。Nat (自然数) を引数にとり、Nat を返す。
+op gcd : Nat Nat -> Nat .
+
+-- 変数 X を Nat (自然数) として宣言
+var X : Nat .
+-- 変数 NzY を NzNat (非ゼロ自然数) として宣言。ここが重要です。
+var NzY : NzNat . 
+
+-- 階乗の定義 (資料P.3に基づく)
+-- gcd(X, 0) は X に等しい
 eq gcd(X, 0) = X .
-eq gcd(0, NzY) = Y .
+
+-- gcd(X, NzY) は gcd(NzY, X rem NzY) に等しい (ユークリッドの互除法)
 eq gcd(X, NzY) = gcd(NzY, X rem NzY) .
-red gcd(0,0) . -- compute the gcd of 0 & 0
-red gcd(0, 1) . -- compute the gcd of 0 & 1
-red gcd(1, 0) . -- compute the gcd of 1 & 0
-red gcd(1, 1) . -- compute the gcd of 1 & 1
-red gcd(2, 1) . -- compute the gcd of 2 & 1
-red gcd(2, 2) . -- compute the gcd of 2 & 2
+
+-- テストケース (資料P.3に基づく)
+red gcd(0,0) .   -- compute the gcd of 0 & 0
+red gcd(2,0) .   -- compute the gcd of 2 & 0
+red gcd(0,2) .   -- compute the gcd of 0 & 2
 red gcd(24,36) . -- compute the gcd of 24 & 36
 red gcd(2015,31031) . -- compute the gcd of 2015 & 31031
 
