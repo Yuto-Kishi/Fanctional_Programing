@@ -1,0 +1,24 @@
+1. Type each piece of programs in the slides as one file, feed it
+into CafeOBJ, and do some testing. Note that the extension of
+a file name in which CafeOBJ programs are written is .cafe,
+such as fact.cafe.
+2. Explain in which way fact(5) is computed.
+
+3. Explain in which way oedc-fact(5) is computed.
+
+4. Write two versions of programs computing the summation
+0+1+2+…+n for a given number n, where one corresponds to
+fact and the other corresponds to oedc-fact and do some
+testing for both versions.
+
+5. Write a program in CafeoBJ that corresponds to the following
+and do some testing
+0
+if n = 0
+1
+if n = 1
+ext-fib(n) =
+2
+if n = 2
+ext-fib(n–1) + ext-fib(n–2) + ext-fib(n–3)
+otherwise
