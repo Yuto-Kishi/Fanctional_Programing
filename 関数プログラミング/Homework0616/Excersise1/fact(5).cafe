@@ -1,0 +1,21 @@
+open NAT .
+
+-- オペレータ fact を宣言: 自然数を一つとり、自然数を返す 。
+op fact : Nat -> Nat .
+
+-- NzNat (非ゼロ自然数) 型の変数を宣言 。
+var NzX : NzNat .
+
+-- 階乗の定義
+-- 0 の階乗は 1 であるという等式 。
+eq fact(0) = 1 .
+
+-- 非ゼロ自然数 NzX の階乗は、NzX に NzX の1つ前の数 (p NzX) の階乗を掛けたもの 。
+-- p は前数を求めるオペレータ 。* は掛け算のオペレータ 。
+eq fact(NzX) = NzX * fact(p NzX) .
+
+-- 5 の階乗を計算する 。
+red fact(5) .
+
+-- モジュールを閉じる 。
+close .

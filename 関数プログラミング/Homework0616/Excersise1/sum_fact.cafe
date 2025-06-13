@@ -1,0 +1,19 @@
+open NAT .
+
+op sum_fact : Nat -> Nat .
+
+var NzX : NzNat .
+
+eq sum_fact(0) = 0 .
+
+eq sum_fact(NzX) = NzX + sum_fact(p NzX) .
+
+red sum_fact(0) .
+red sum_fact(1) .
+red sum_fact(2) .
+red sum_fact(3) .
+red sum_fact(4) .
+red sum_fact(5) .
+red sum_fact(10) .
+
+close .
