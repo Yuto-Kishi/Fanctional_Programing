@@ -1,0 +1,29 @@
+open NAT .
+
+-- アッカーマン関数を宣言
+-- op ack: Nat Nat -> Nat.
+op ack : Nat Nat -> Nat .
+
+-- 変数を宣言
+var Y : Nat .
+var NzX : NzNat .
+var NzY : NzNat .
+
+-- アッカーマン関数の定義（等式）
+-- eq ack(0,Y)=Y+1.
+eq ack(0, Y) = Y + 1 .
+
+-- eq ack(NzX,0)=ack(p~NzX,1).
+eq ack(NzX, 0) = ack(p NzX, 1) .
+
+-- eq ack(NzX,NzY)=ack(p~NzX,ack(NzX,p~NzY)).
+eq ack(NzX, NzY) = ack(p NzX, ack(NzX, p NzY)) .
+
+-- テストケース（資料P.6に基づく）
+red ack(0,0) .
+red ack(1,1) .
+red ack(2,2) .
+red ack(3,2) .
+red ack(3,3) .
+
+close .
