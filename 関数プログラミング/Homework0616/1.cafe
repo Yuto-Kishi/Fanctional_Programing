@@ -1,0 +1,17 @@
+open NAT .
+op gcd : NAT NAT -> NAT .
+var X : NAT .
+var NzY : NAT . --Nz : Not zero
+eq gcd(X, 0) = X .
+eq gcd(0, NzY) = Y .
+eq gcd(X, NzY) = gcd(NzY, X rem NzY) .
+red gcd(0,0) . -- compute the gcd of 0 & 0
+red gcd(0, 1) . -- compute the gcd of 0 & 1
+red gcd(1, 0) . -- compute the gcd of 1 & 0
+red gcd(1, 1) . -- compute the gcd of 1 & 1
+red gcd(2, 1) . -- compute the gcd of 2 & 1
+red gcd(2, 2) . -- compute the gcd of 2 & 2
+red gcd(24,36) . -- compute the gcd of 24 & 36
+red gcd(2015,31031) . -- compute the gcd of 2015 & 31031
+
+close .
