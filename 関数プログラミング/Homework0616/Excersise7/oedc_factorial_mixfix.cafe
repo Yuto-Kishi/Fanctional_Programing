@@ -1,0 +1,32 @@
+open NAT .
+
+-- 後置オペレータ _! は断念し、通常の関数名を使用
+op oedc-fact-func : Nat -> Nat .
+
+-- mix-fix オペレータ if _ then _ else _ を宣言
+op if _ then _ else _ : Bool Nat Nat -> Nat .
+
+-- 補助オペレータ g はそのまま使用
+op g : Nat Nat -> Nat .
+
+-- 変数を宣言
+vars X Y : Nat . var NzX : NzNat .
+
+-- if_ then _ else _ の定義
+eq if true then X else Y = X .
+eq if false then X else Y = Y .
+
+-- g (補助オペレータ) の定義
+eq g(X,Y) = if X > Y then g(X, 2 * Y) * g(sd(X,Y), 2 * Y) else X .
+
+-- oedc-fact-func の定義
+eq oedc-fact-func(0) = 1 .
+eq oedc-fact-func(NzX) = g(NzX,1) .
+
+-- テストケースを oedc-fact-func に修正
+red oedc-fact-func(0) .   -- 期待値: 1
+red oedc-fact-func(1) .   -- 期待値: 1
+red oedc-fact-func(5) .   -- 期待値: 120 (これは以前 oedc-fact(5) の計算過程で解説した値です)
+red oedc-fact-func(10) .  -- 期待値: 3628800
+
+close .

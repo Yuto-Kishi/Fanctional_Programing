@@ -5,7 +5,7 @@ op gcd : Nat Nat -> Nat .
 
 -- 変数 X を Nat (自然数) として宣言
 var X : Nat .
--- 変数 NzY を NzNat (非ゼロ自然数) として宣言。ここが重要です。
+-- 変数 NzY を NzNat (非ゼロ自然数) として宣言
 var NzY : NzNat . 
 
 -- 階乗の定義 (資料P.3に基づく)

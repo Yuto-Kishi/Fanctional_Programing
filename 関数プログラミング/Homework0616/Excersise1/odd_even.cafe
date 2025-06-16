@@ -28,4 +28,4 @@ eq oedc-fact(NzX) = g(NzX,1) .
 
 red oedc-fact(10000) . -- can be computed
 
-close
+close .
