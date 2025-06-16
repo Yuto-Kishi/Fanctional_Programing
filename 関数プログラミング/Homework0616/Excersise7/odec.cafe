@@ -2,7 +2,7 @@ open NAT .
 
 op _! : Nat -> Nat .
 
-op if _ then _ else _ : Bool Nat Nat -> Nat .
+op if_then {_} else {_} : Bool Nat Nat -> Nat .
 
 -- 補助オペレータ g はそのまま使用
 op g : Nat Nat -> Nat .

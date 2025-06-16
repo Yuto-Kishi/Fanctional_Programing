@@ -4,7 +4,7 @@ open NAT .
 op oedc-fact-func : Nat -> Nat .
 
 -- mix-fix オペレータ if _ then _ else _ を宣言
-op if _ then _ else _ : Bool Nat Nat -> Nat .
+op if_then {_} else {_} : Bool Nat Nat -> Nat .
 
 -- 補助オペレータ g はそのまま使用
 op g : Nat Nat -> Nat .
