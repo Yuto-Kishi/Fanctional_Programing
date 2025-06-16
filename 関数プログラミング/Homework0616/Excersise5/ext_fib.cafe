@@ -1,0 +1,50 @@
+open NAT .
+
+-- 拡張フィボナッチ関数 (メイン)
+op ext-fib : Nat -> Nat .
+
+-- 補助関数1 (1を処理し、残りを次の補助関数へ)
+op ext-fib-aux1 : NzNat -> Nat .
+
+-- 補助関数2 (2を処理し、残りを再帰へ)
+op ext-fib-aux2 : NzNat -> Nat .
+
+-- 変数を宣言
+var Y : Nat .       -- p オペレータを使う必要がないケース（0, 1, 2）で利用
+var NzX : NzNat .   -- 非ゼロ自然数
+var NzY : NzNat .   -- NzY もNzNat、特に3以上の数を扱う際に使用
+
+-- ext-fib の定義
+-- ケース1: n = 0
+eq ext-fib(0) = 0 .
+-- ケース2: n > 0 の場合、ext-fib-aux1 に NzNat 型で渡す
+eq ext-fib(NzX) = ext-fib-aux1(NzX) .
+
+-- ext-fib-aux1 の定義
+-- ケース3: n = 1 (ext-fib-aux1 の引数NzXが1の場合)
+eq ext-fib-aux1(1) = 1 .
+-- ケース4: n > 1 の場合、ext-fib-aux2 に NzNat 型で渡す
+-- p 1 は 0 になるが、ここではNzXが1以外（2以上）の場合に呼び出されるため、
+-- ext-fib-aux2 に渡される引数は必ずNzNatになる。
+eq ext-fib-aux1(NzX) = ext-fib-aux2(NzX) .
+
+-- ext-fib-aux2 の定義
+-- ケース5: n = 2 (ext-fib-aux2 の引数NzXが2の場合)
+eq ext-fib-aux2(2) = 2 .
+-- ケース6: n > 2 の場合（つまり NzX >= 3 の場合）
+-- ext-fib-aux2 の引数NzXが2以外の場合にこの等式が適用される
+-- ここで p (p NzX) や p NzX を使うが、NzXは3以上が保証されるため、
+-- p の引数は常にNzNatとなる
+eq ext-fib-aux2(NzX) = ext-fib(p NzX) + ext-fib(p (p NzX)) + ext-fib(p (p (p NzX))) .
+
+
+-- テストケース
+red ext-fib(0) .   -- 期待値: 0
+red ext-fib(1) .   -- 期待値: 1
+red ext-fib(2) .   -- 期待値: 2
+red ext-fib(3) .   -- 期待値: ext-fib(2) + ext-fib(1) + ext-fib(0) = 2 + 1 + 0 = 3
+red ext-fib(4) .   -- 期待値: ext-fib(3) + ext-fib(2) + ext-fib(1) = 3 + 2 + 1 = 6
+red ext-fib(5) .   -- 期待値: ext-fib(4) + ext-fib(3) + ext-fib(2) = 6 + 3 + 2 = 11
+red ext-fib(10) .  -- 期待値: ext-fib(9) + ext-fib(8) + ext-fib(7) = 45 + 34 + 21 = 100
+
+close .
