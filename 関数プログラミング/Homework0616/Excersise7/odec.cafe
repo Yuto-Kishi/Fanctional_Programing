@@ -1,0 +1,40 @@
+open NAT .
+
+-- 問題6と7の要求通り、後置オペレータ _! を宣言
+-- CafeOBJ 1.6.2では、リテラル定数への適用でパースエラーになる可能性が高い
+op _! : Nat -> Nat .
+
+-- 問題7の要求通り、mix-fix オペレータ if_then { } else { } を宣言
+-- CafeOBJ 1.6.2では、波括弧を使った引数指定で警告やエラーになる可能性が高い
+op if_then { } else { } : Bool Nat Nat -> Nat .
+
+-- 補助オペレータ g はそのまま使用
+op g : Nat Nat -> Nat .
+
+-- 変数を宣言
+vars X Y : Nat . var NzX : NzNat .
+
+-- if_then { } else { } の定義
+-- こちらも問題文に忠実に波括弧 {} を含めて記述
+eq if true then { X } else { Y } = X .
+eq if false then { X } else { Y } = Y .
+
+-- g (補助オペレータ) の定義
+-- cond を if_then { } else { } に置き換える
+-- こちらも波括弧 {} を含めて記述
+eq g(X,Y) = if X > Y then { g(X, 2 * Y) * g(sd(X,Y), 2 * Y) } else { X } .
+
+-- _! (奇偶分割階乗) の定義
+-- 問題6,7の要求通り、0! と NzX! の形式で記述
+eq 0! = 1 . 
+eq NzX! = g(NzX,1) .
+
+-- テストケースも _! オペレータの形式で記述
+red 0! .
+red 1! .
+red 5! .
+red 10! .
+red 100! .
+red 10000! .
+
+close .
