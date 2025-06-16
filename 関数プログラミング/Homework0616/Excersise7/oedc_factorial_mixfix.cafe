@@ -24,9 +24,9 @@ eq oedc-fact-func(0) = 1 .
 eq oedc-fact-func(NzX) = g(NzX,1) .
 
 -- テストケースを oedc-fact-func に修正
-red oedc-fact-func(0) .   -- 期待値: 1
-red oedc-fact-func(1) .   -- 期待値: 1
-red oedc-fact-func(5) .   -- 期待値: 120 (これは以前 oedc-fact(5) の計算過程で解説した値です)
-red oedc-fact-func(10) .  -- 期待値: 3628800
+red oedc-fact-func(0) .   
+red oedc-fact-func(1) .   
+red oedc-fact-func(5) .   
+red oedc-fact-func(10) .  
 
 close .
