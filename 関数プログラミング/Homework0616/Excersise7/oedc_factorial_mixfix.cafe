@@ -1,0 +1,36 @@
+open NAT .
+
+-- 後置オペレータ _! を宣言。prec と type の指定を削除。
+op _! : Nat -> Nat .
+
+-- mix-fix オペレータ if_then { } else { } を宣言。
+-- こちらも prec や type の指定は不要です。
+op if_then { } else { } : Bool Nat Nat -> Nat .
+
+-- 補助オペレータ g はそのまま使用します。
+op g : Nat Nat -> Nat .
+
+-- 変数を宣言
+vars X Y : Nat . var NzX : NzNat .
+
+-- if_then { } else { } の定義
+eq if true then { X } else { Y } = X .
+eq if false then { X } else { Y } = Y .
+
+-- g (補助オペレータ) の定義
+-- ここで cond を if_then { } else { } に置き換えます。
+eq g(X,Y) = if X > Y then { g(X, 2 * Y) * g(sd(X,Y), 2 * Y) } else { X } .
+
+-- _! (奇偶分割階乗) の定義
+eq 0! = 1 .
+eq NzX! = g(NzX,1) .
+
+-- テストケース
+red 0! .
+red 1! .
+red 5! .
+red 10! .
+red 100! .
+red 10000! . 
+
+close .
