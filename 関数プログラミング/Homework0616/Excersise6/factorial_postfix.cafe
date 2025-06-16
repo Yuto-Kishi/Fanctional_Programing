@@ -1,0 +1,19 @@
+open NAT .
+
+-- 後置オペレータ _! を宣言。優先順位と型を明示的に指定。
+op _! : Nat -> Nat [prec 100 type post] .
+
+var NzX : NzNat .
+
+-- 階乗の定義
+eq 0! = 1 .                 
+eq NzX! = NzX * (p NzX)! .  
+
+-- テストケース
+red 0! .
+red 1! .
+red 5! .
+red 10! .
+red 100! .
+
+close .
