@@ -1,0 +1,22 @@
+-- FIBモジュール
+mod! FIB {
+  pr(NAT)
+
+  op fib : Nat -> Nat .
+  op sfib : Nat -> Nat .
+
+  var NzX : NzNat .
+
+  eq fib(0) = 0 .
+  eq fib(NzX) = sfib(p NzX) .
+
+  eq sfib(0) = 1 .
+  eq sfib(NzX) = fib(NzX) + fib(p NzX) .
+}
+
+open FIB .
+red fib(0) .
+red fib(1) .
+red fib(5) .
+red fib(10) .
+close .

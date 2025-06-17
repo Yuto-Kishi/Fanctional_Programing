@@ -1,0 +1,16 @@
+mod! FACT {
+  pr(NAT)
+
+  op fact : Nat -> Nat .
+  var NzX : NzNat .
+
+  eq fact(0) = 1 .
+  eq fact(NzX) = NzX * fact(p NzX) .
+}
+
+open FACT .
+red fact(0) .
+red fact(1) .
+red fact(5) .
+red fact(10) .
+close .

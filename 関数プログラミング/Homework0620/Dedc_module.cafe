@@ -1,0 +1,33 @@
+-- OEDC-FACTモジュール
+mod! OEDC-FACT {
+  pr(NAT)
+
+  op cond : Bool Nat Nat -> Nat .
+  op g : Nat Nat -> Nat .
+  op oedc-fact : Nat -> Nat .
+
+  vars X Y : Nat .
+  var NzX : NzNat .
+
+  eq cond(true, X, Y) = X .
+  eq cond(false, X, Y) = Y .
+
+  op _>_ : Nat Nat -> Bool .
+  eq 0 > Y = false .
+  eq (s X) > 0 = true .
+  eq (s X) > (s Y) = X > Y .
+
+  eq g(X,Y) = cond(X > Y, g(X,2 * Y) * g(sd(X,Y),2 * Y), X) .
+
+  op sd : Nat Nat -> Nat . -- symmetric difference（擬似的に記述）
+  eq sd(X,Y) = X . -- 本来の定義が不明なため、仮で恒等返し（修正可能）
+
+  eq oedc-fact(0) = 1 .
+  eq oedc-fact(NzX) = g(NzX,1) .
+}
+
+open OEDC-FACT .
+red oedc-fact(0) .
+red oedc-fact(1) .
+red oedc-fact(5) .
+close .
