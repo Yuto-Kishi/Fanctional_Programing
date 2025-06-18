@@ -1,0 +1,63 @@
+mod! NATLIST {
+  pr(NAT)
+
+  [Nil NnNatList < NatList]
+  [NatList]
+
+  op nil : -> Nil {constr} .
+  op _|_ : Nat NatList -> NnNatList {constr} .
+}
+
+mod! MERGE-SORT {
+  pr(NATLIST)
+
+  vars X Y : Nat .
+  vars L L1 L2 : NatList .
+  vars NzN : NzNat .
+
+  op _<=_ : Nat Nat -> Bool .
+  eq 0 <= Y = true .
+  eq (s X) <= 0 = false .
+  eq (s X) <= (s Y) = X <= Y .
+
+  op if_then {_} else {_} : Bool NatList NatList -> NatList .
+  eq if true then {L1} else {L2} = L1 .
+  eq if false then {L1} else {L2} = L2 .
+
+  op length : NatList -> Nat .
+  eq length(nil) = 0 .
+  eq length(X | L) = s(length(L)) .
+
+  op take : Nat NatList -> NatList .
+  eq take(0, L) = nil .
+  eq take(NzN, nil) = nil .
+  eq take(NzN, X | L) = X | take(p NzN, L) .
+
+  op drop : Nat NatList -> NatList .
+  eq drop(0, L) = L .
+  eq drop(NzN, nil) = nil .
+  eq drop(NzN, X | L) = drop(p NzN, L) .
+
+  op merge : NatList NatList -> NatList .
+  eq merge(nil, L2) = L2 .
+  eq merge(L1, nil) = L1 .
+  eq merge(X | L1, Y | L2) =
+    if X <= Y then { X | merge(L1, Y | L2) }
+    else { Y | merge(X | L1, L2) } .
+
+  op msort : NatList -> NatList .
+  eq msort(nil) = nil .
+  eq msort(X | nil) = X | nil .
+  eq msort(L) =
+    merge(
+      msort(take(length(L) quo 2, L)),
+      msort(drop(length(L) quo 2, L))
+    ) .
+}
+
+open MERGE-SORT .
+red msort(4 | 7 | 5 | 1 | 0 | 3 | 6 | 2 | nil) .
+red msort(3 | 1 | 2 | nil) .
+red msort(5 | nil) .
+red msort(nil) .
+close .
