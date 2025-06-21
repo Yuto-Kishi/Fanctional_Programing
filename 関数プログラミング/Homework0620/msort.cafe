@@ -15,10 +15,7 @@ mod! MERGE-SORT {
   vars L L1 L2 : NatList .
   vars NzN : NzNat .
 
-  op _<=_ : Nat Nat -> Bool .
-  eq 0 <= Y = true .
-  eq (s X) <= 0 = false .
-  eq (s X) <= (s Y) = X <= Y .
+  
 
   op if_then {_} else {_} : Bool NatList NatList -> NatList .
   eq if true then {L1} else {L2} = L1 .

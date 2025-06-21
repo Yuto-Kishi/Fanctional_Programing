@@ -1,0 +1,51 @@
+mod! NATLIST {
+  pr(NAT)
+
+  [Nil NnNatList < NatList]
+  [NatList]
+
+  op nil : -> Nil {constr} .
+  op _|_ : Nat NatList -> NnNatList {constr} .
+}
+
+mod! QSORT {
+  pr(NATLIST)
+
+  vars X Y : Nat .
+  vars L LL RL SortedLL SortedRL : NatList .
+
+  op _<=_ : Nat Nat -> Bool .
+  eq 0 <= Y = true .
+  eq (s X) <= 0 = false .
+  eq (s X) <= (s Y) = X <= Y .
+
+  op _<_ : Nat Nat -> Bool .
+  eq X < Y = not(Y <= X) .
+
+  op if_then {_} else {_} : Bool NatList NatList -> NatList .
+  eq if true then {L1} else {L2} = L1 .
+  eq if false then {L1} else {L2} = L2 .
+
+  op qsort : NatList -> NatList .
+  eq qsort(nil) = nil .
+  eq qsort(X | nil) = X | nil .
+  eq qsort(X | Y | L) = qsortPartition(X, Y | L, nil, nil) .
+
+  op qsortPartition : Nat NatList NatList NatList -> NatList .
+  eq qsortPartition(X, nil, LL, RL) =
+    append(qsort(LL), X | qsort(RL)) .
+
+  eq qsortPartition(X, Y | L, LL, RL) =
+    if Y < X then { qsortPartition(X, L, Y | LL, RL) }
+    else { qsortPartition(X, L, LL, Y | RL) } .
+
+  op append : NatList NatList -> NatList .
+  eq append(nil, L2) = L2 .
+  eq append(X | L1, L2) = X | append(L1, L2) .
+}
+open QSORT .
+red qsort(4 | 7 | 5 | 1 | 0 | 3 | 6 | 2 | nil) .
+red qsort(3 | 1 | 2 | nil) .
+red qsort(5 | nil) .
+red qsort(nil) .
+close .
