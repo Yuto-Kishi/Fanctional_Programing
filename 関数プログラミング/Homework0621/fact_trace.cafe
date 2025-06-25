@@ -1,29 +1,17 @@
-mod! OEDC-FACT {
+mod! FACT {
   pr(NAT)
-  pr(BOOL)
 
-  op cond : Bool Nat Nat -> Nat .
-  op sdiff : Nat Nat -> Nat .
-  op g : Nat Nat -> Nat .
-  op oedc-fact : Nat -> Nat .
+  op fact : Nat -> Nat .
 
-  vars X Y : Nat .
-  var  N : NzNat .
+  var N : Nat .
 
-  eq cond(true , X , Y) = X .
-  eq cond(false, X , Y) = Y .
-
-  eq sdiff(X , Y) = cond(X > Y , X - Y , Y - X) .
-
-  eq g(X , Y) = cond(X > Y , g(X , 2 * Y) * g(sdiff(X , Y) , 2 * Y) , X) .
-
-  eq oedc-fact(0) = 1 .
-  eq oedc-fact(N) = g(N , 1) .
+  eq fact(0)  = 1 .
+  eq fact(s N) = s N * fact(N) .
 }
 
 set trace on
-open OEDC-FACT .
-red oedc-fact(5) .
+open FACT .
+red fact(5) .
 close
 set trace off
 quit
