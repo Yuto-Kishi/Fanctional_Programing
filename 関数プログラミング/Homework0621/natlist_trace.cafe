@@ -1,0 +1,68 @@
+mod! NAT-ERR {
+  pr(NAT)
+  [Nat ErrNat < Nat&Err]
+  op errNat : -> ErrNat {constr} .
+
+  op p_ : Zero -> ErrNat .
+  op p_ : ErrNat -> ErrNat .
+  op p_ : Nat&Err -> Nat&Err .
+
+  op _quo_ : Nat&Err Zero -> ErrNat .
+  op _quo_ : Nat&Err ErrNat -> ErrNat .
+  op _quo_ : ErrNat Nat&Err -> ErrNat .
+  op _quo_ : Nat&Err Nat&Err -> Nat&Err .
+
+  var NE : Nat&Err .
+  eq p 0 = errNat .
+  eq p errNat = errNat .
+  eq NE quo 0 = errNat .
+  eq NE quo errNat = errNat .
+  eq errNat quo NE = errNat .
+}
+
+mod! NATLIST {
+  pr(NAT-ERR)
+  pr(BOOL)
+
+  [Nil NnNatList < NatList]
+
+  op nil : -> Nil {constr} .
+  op _|_ : Nat NatList -> NnNatList {constr prec: 50} .
+
+  op hd : Nil -> ErrNat .
+  op hd : NnNatList -> Nat .
+  op hd : NatList -> Nat&Err .
+
+  op tl : NatList -> NatList .
+
+  op _@_ : NatList NatList -> NatList [assoc prec: 40] .
+  op [_.._] : Nat Nat -> NatList .
+  op if_then {_} else {_} : Bool NatList NatList -> NatList .
+
+  vars X Y : Nat .
+  vars L L2 : NatList .
+  var B : Bool .
+
+  eq hd(nil) = errNat .
+  eq hd(X | L) = X .
+
+  eq tl(nil) = nil .
+  eq tl(X | L) = L .
+
+  eq nil @ L2 = L2 .
+  eq (X | L) @ L2 = X | (L @ L2) .
+
+  eq [X .. Y] = if X > Y then {nil} else {X | [X + 1 .. Y]} .
+
+  eq if true then {L} else {L2} = L .
+  eq if false then {L} else {L2} = L2 .
+}
+
+set trace on
+open NATLIST .
+red hd(0 | 1 | nil) .
+red tl(0 | 1 | nil) .
+red [2 .. 5] .
+close .
+set trace off
+quit

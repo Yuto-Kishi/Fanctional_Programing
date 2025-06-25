@@ -1,0 +1,18 @@
+mod! GCD {
+  pr(NAT)
+
+  op gcd : Nat Nat -> Nat .
+
+  vars X : Nat .
+  var  NzY : NzNat .
+
+  eq gcd(X,0)   = X .
+  eq gcd(X,NzY) = gcd(NzY, X rem NzY) .
+}
+
+set trace on
+open GCD .
+red gcd(24,36) .
+close .
+set trace off
+quit

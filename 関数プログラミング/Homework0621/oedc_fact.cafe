@@ -1,0 +1,38 @@
+mod! OEDC-FACT {
+  -- NATをインポート
+  imports pr(NAT)
+  -- BOOLをインポート
+  imports pr(BOOL)
+  -- sdオペレータとエラーハンドリング関連が定義されているNAT-ERRをインポート
+  -- これにより、sdオペレータが利用可能になるはずです。
+  imports pr(NAT-ERR) 
+
+  -- op sd : Nat Nat -> Nat . <-- この行はコメントアウトまたは削除
+  -- sdはNAT-ERRモジュールが提供する組み込みオペレータとして使用します。
+  -- もしsdを明示的に宣言すると、警告の原因になる可能性があります。
+
+  op cond : Bool Nat Nat -> Nat .
+  op g : Nat Nat -> Nat .
+  op oedc-fact : Nat -> Nat .
+  
+  vars X Y : Nat .
+  var  NzX : NzNat .
+
+  eq cond(true, X, Y)  = X .
+  eq cond(false, X, Y) = Y .
+
+  -- sd の等式定義を削除。sd は組み込みとして扱います。
+  -- eq sd(X, Y) = cond(X > Y, X - Y, Y - X) . <-- この行は削除
+
+  eq g(X, Y) = cond(X > Y, g(X, 2 * Y) * g(sd(X, Y), 2 * Y), X) .
+  
+  eq oedc-fact(0)  = 1 .
+  eq oedc-fact(NzX) = g(NzX, 1) .
+}
+
+-- 以下は、上で定義したOEDC-FACTモジュールを使ってoedc-fact(5)のトレースを表示するテストコードです。
+set trace on 
+open OEDC-FACT .
+red oedc-fact(5) .
+close 
+set trace off 
