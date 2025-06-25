@@ -24,6 +24,6 @@ mod! OEDC-FACT {
 set trace on
 open OEDC-FACT .
 red oedc-fact(5) .
-close .
+close
 set trace off
 quit

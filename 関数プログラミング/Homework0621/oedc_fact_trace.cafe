@@ -26,8 +26,8 @@ mod! OEDC-FACT {
   eq oedc-fact(NzX) = g(NzX,1) .
 }
 
+set trace on 
 open OEDC-FACT .
-red oedc-fact(0) .
-red oedc-fact(1) .
 red oedc-fact(5) .
-close .
+close 
+set trace off 
